@@ -1,0 +1,24 @@
+server:
+  port:8080
+spring:
+  application:
+    name: ProductService
+  datasource:
+    url: jdbc:mysql://localhost:3306/productdb
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  spring:
+    sql:
+      init:
+        mode: never
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        boot:
+          allow_jdbc_metadata_access: false
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
