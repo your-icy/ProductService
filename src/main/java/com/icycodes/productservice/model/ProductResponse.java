@@ -1,4 +1,4 @@
-package com.icycodes.ProductService.Model;
+package com.icycodes.productservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,9 +1,9 @@
-package com.icycodes.ProductService.Controller;
+package com.icycodes.productservice.controller;
 
-import com.icycodes.ProductService.Entity.Product;
-import com.icycodes.ProductService.Model.ProductRequest;
-import com.icycodes.ProductService.Model.ProductResponse;
-import com.icycodes.ProductService.Service.ProductService;
+import com.icycodes.productservice.entity.Product;
+import com.icycodes.productservice.model.ProductRequest;
+import com.icycodes.productservice.model.ProductResponse;
+import com.icycodes.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +34,16 @@ public class ProductController {
     @GetMapping("/gimme")
     public List<Product> getAllProducts(){
         return productService.getAllProducts();
+    }
+
+
+    @PutMapping("/reduceQuantity/{id}")
+    public ResponseEntity<Void> reduceQuantity(
+            @PathVariable("id") Long productId,
+            @RequestParam Long quantity)
+    {
+        productService.reduceQuantity(productId,quantity);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

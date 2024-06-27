@@ -1,4 +1,4 @@
-package com.icycodes.ProductService.Exceptions;
+package com.icycodes.productservice.exceptions;
 
 import lombok.Data;
 

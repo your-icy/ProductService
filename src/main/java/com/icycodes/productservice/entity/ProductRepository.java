@@ -1,4 +1,4 @@
-package com.icycodes.ProductService.Entity;
+package com.icycodes.productservice.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

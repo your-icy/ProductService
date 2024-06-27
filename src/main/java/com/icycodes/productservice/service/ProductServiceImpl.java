@@ -1,10 +1,11 @@
-package com.icycodes.ProductService.Service;
+package com.icycodes.productservice.service;
 
-import com.icycodes.ProductService.Entity.Product;
-import com.icycodes.ProductService.Entity.ProductRepository;
-import com.icycodes.ProductService.Exceptions.ProductNotFoundException;
-import com.icycodes.ProductService.Model.ProductRequest;
-import com.icycodes.ProductService.Model.ProductResponse;
+import com.icycodes.productservice.entity.Product;
+import com.icycodes.productservice.entity.ProductRepository;
+import com.icycodes.productservice.exceptions.InappropriateQuantityException;
+import com.icycodes.productservice.exceptions.ProductNotFoundException;
+import com.icycodes.productservice.model.ProductRequest;
+import com.icycodes.productservice.model.ProductResponse;
 import lombok.extern.log4j.Log4j2;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +63,39 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> getAllProducts() {
         List<Product> productList = productRepository.findAll();
         return productList;
+    }
+
+
+    @Override
+    public void reduceQuantity(Long productId,Long quantity){
+
+        log.info("reducing quantity started");
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(
+                        ()-> new ProductNotFoundException(" product not found", "PRODUCT_NOT_FOUND")
+                );
+
+        log.info("product found to reduce quantity");
+
+        if(product.getQuantity()<quantity){
+
+            log.info("ordered quantity is more than inventory");
+
+            throw new InappropriateQuantityException(
+                    "ordered quantity is more than inventory" ,
+                    "INSUFFICIENT_QUANTITY"
+            );
+        }
+
+
+        product.setQuantity(product.getQuantity() - quantity);
+        log.info(" quantity is reduced");
+
+        productRepository.save(product);
+        log.info(" product updated after reducing quantity");
+
+
+
     }
 }
