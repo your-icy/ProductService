@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
+import static jakarta.persistence.GenerationType.TABLE;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -11,8 +13,15 @@ import lombok.*;
 @Builder
 public class Product {
 
+    @TableGenerator(
+            name = "productGen",
+            table = "PRODUCT_ID_GEN",
+            pkColumnName = "GEN_KEY",
+            valueColumnName = "GEN_VALUE",
+            pkColumnValue = "PRODUCT_ID",
+            allocationSize = 1)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=TABLE, generator="productGen")
     private Long productId;
 
     @Column(name = "Product_Name")
